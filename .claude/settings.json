@@ -1,0 +1,49 @@
+{
+  "permissions": {
+    "disableBypassPermissionsMode": "disable",
+    "disableAutoMode": "disable",
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(./secrets/**)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(~/.ssh/**)",
+      "Read(~/.npmrc)",
+      "Bash(sudo *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(rm -rf *)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git push --force-with-lease *)",
+      "Bash(git reset --hard *)",
+      "Bash(git commit --no-verify *)",
+      "Bash(git config --global *)",
+      "Bash(npm config *)",
+      "Bash(pnpm config *)",
+      "Bash(npm install -g *)",
+      "Bash(npm i -g *)",
+      "Bash(pnpm add -g *)",
+      "Edit(./.claude/**)"
+    ],
+    "ask": [
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git merge *)",
+      "Bash(git checkout *)",
+      "Bash(git branch -d *)",
+      "Bash(git branch -D *)",
+      "Bash(pnpm add *)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm approve-builds *)",
+      "Bash(pnpm dlx *)",
+      "Bash(npx *)",
+      "Bash(npm *)",
+      "Bash(gh *)",
+      "WebFetch"
+    ]
+  }
+}
