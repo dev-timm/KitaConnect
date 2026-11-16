@@ -2,5 +2,11 @@
   "name": "@kitaconnect/tokens",
   "version": "0.0.0",
   "private": true,
-  "description": "KitaConnect design tokens, generated into CSS variables."
+  "description": "KitaConnect design tokens, generated into CSS variables.",
+  "scripts": {
+    "typecheck": "tsc"
+  },
+  "devDependencies": {
+    "@kitaconnect/config": "workspace:*"
+  }
 }

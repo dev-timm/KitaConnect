@@ -164,12 +164,39 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      typescript:
+        specifier: 6.0.3
+        version: 6.0.3
 
-  apps/web: {}
+  apps/web:
+    devDependencies:
+      '@kitaconnect/config':
+        specifier: workspace:*
+        version: link:../../packages/config
 
   packages/config: {}
 
-  packages/tokens: {}
+  packages/tokens:
+    devDependencies:
+      '@kitaconnect/config':
+        specifier: workspace:*
+        version: link:../config
 
-  packages/ui: {}
+  packages/ui:
+    devDependencies:
+      '@kitaconnect/config':
+        specifier: workspace:*
+        version: link:../config
+
+packages:
+
+  typescript@6.0.3:
+    resolution: {integrity: sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+snapshots:
+
+  typescript@6.0.3: {}
