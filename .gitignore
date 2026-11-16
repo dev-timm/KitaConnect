@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Environment files (secrets stay local; only the example is committed)
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+.next/
+out/
+storybook-static/
+coverage/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Personal Claude Code files (shared settings in .claude/settings.json stay committed)
+.claude/settings.local.json
+CLAUDE.local.md
