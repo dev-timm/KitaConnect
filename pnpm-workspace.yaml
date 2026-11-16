@@ -1,0 +1,14 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Supply-chain safety
+minimumReleaseAge: 20160 # minutes = 14 days; versions younger than this are not installed
+strictDepBuilds: true # fail install if a package wants to run an unapproved build script (explicit, also the default)
+allowBuilds: {} # no package is allowed to run build scripts yet; each one needs approval
+blockExoticSubdeps: true # indirect deps must come from the registry, not git/tarball URLs (explicit, also the default)
+trustPolicy: no-downgrade # fail if a package's publishing trust level drops (possible hijack)
+
+# Version enforcement
+engineStrict: true # fail install on the wrong Node version
+pmOnFail: error # wrong pnpm version: stop with an error instead of silently downloading another pnpm
