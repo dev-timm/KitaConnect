@@ -1,0 +1,6 @@
+{
+  "name": "@kitaconnect/tokens",
+  "version": "0.0.0",
+  "private": true,
+  "description": "KitaConnect design tokens, generated into CSS variables."
+}

@@ -156,3 +156,20 @@ snapshots:
       '@pnpm/exe.win32-x64': 12.16.1
 
 ---
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .: {}
+
+  apps/web: {}
+
+  packages/config: {}
+
+  packages/tokens: {}
+
+  packages/ui: {}

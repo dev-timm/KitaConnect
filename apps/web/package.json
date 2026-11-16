@@ -1,0 +1,6 @@
+{
+  "name": "@kitaconnect/web",
+  "version": "0.0.0",
+  "private": true,
+  "description": "KitaConnect landing page and web app (Next.js)."
+}
