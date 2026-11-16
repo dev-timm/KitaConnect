@@ -1,0 +1,25 @@
+{
+  "name": "kitaconnect",
+  "version": "0.0.0",
+  "private": true,
+  "description": "KitaConnect monorepo: design system, landing page and web app.",
+  "packageManager": "pnpm@12.16.1",
+  "engines": {
+    "node": ">=26 <27",
+    "pnpm": "12.16.1"
+  },
+  "scripts": {
+    "typecheck": "pnpm -r typecheck",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@kitaconnect/config": "workspace:*",
+    "eslint": "10.14.0",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.1"
+  }
+}

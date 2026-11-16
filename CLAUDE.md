@@ -1,11 +1,14 @@
 # KitaConnect: rules for Claude Code
 
 ## Project
+
 Monorepo for KitaConnect, a platform that connects parents with Kitas (daycare centers).
 Three deliverables:
+
 1. Design system: the Figma "KC Design System" as code (tokens, components, Storybook)
 2. Landing page: the marketing website (Figma file "Design", page "Website")
 3. Web app: the parent and Kita screens (Figma file "Design", page "App")
+
 The landing page and the app are built only from the design system.
 
 The owner leads this project and reviews every change.
@@ -13,6 +16,7 @@ Explain technical steps in plain language; do not assume deep coding experience.
 This is a PUBLIC repository. Keep it clean and professional, and never commit anything private.
 
 ## How to work with me
+
 - Explain what you do and why in plain language. Briefly define technical terms.
 - Work in small steps. Stop and wait for my confirmation after each step.
 - Use plan mode for anything non-trivial and show me the plan before editing files.
@@ -27,6 +31,7 @@ This is a PUBLIC repository. Keep it clean and professional, and never commit an
   (Decided / Open decisions), so it always reflects the current state.
 
 ## Stack
+
 - pnpm workspaces monorepo (no Turborepo for now)
 - TypeScript (strict), React, Next.js (App Router)
 - Styling: CSS custom properties from design tokens + CSS Modules. No Tailwind.
@@ -37,22 +42,29 @@ This is a PUBLIC repository. Keep it clean and professional, and never commit an
 - Accessibility target: WCAG 2.2 AA.
 
 ## Structure
-- apps/web         Next.js: landing page and web app (consumes tokens and ui)
-- packages/tokens  Design tokens, generated into CSS variables
-- packages/ui      React components and Storybook
-- packages/config  Shared TypeScript and ESLint settings
+
+- `apps/web`: landing page and web app, built with Next.js (uses tokens and ui)
+- `packages/tokens`: design tokens, generated into CSS variables
+- `packages/ui`: React components and Storybook
+- `packages/config`: shared TypeScript and ESLint settings
+
 Check package.json for the exact scripts. Do not guess command names.
+Root scripts: `pnpm format`, `pnpm format:check`, `pnpm lint`, `pnpm typecheck`.
 
 ## Design tokens
+
 The Figma file has four variable collections. Keep that layering in code:
+
 - Brand: primitives (colors, font families, font weights, numeric scale)
 - Alias: palettes (primary, error, success, warning, information, neutral), border width, border radius
 - Mapped: role tokens (text, icon, surface, border) with Light and Dark modes
 - Responsive: type sizes with Desktop (1440) and Mobile (440) modes
+
 Propose the CSS naming scheme for my approval before generating tokens.
 Support light and dark themes from the start.
 
 ## Styling rules
+
 - Never write raw color, font, spacing, radius or shadow values in CSS or TSX. Use token variables only.
 - Components never use Brand primitives directly. Colors come from Mapped tokens, border width and radius from Alias tokens, and type sizes from Responsive tokens.
 - Fonts are loaded in one place and identically in Storybook and the app.
@@ -60,6 +72,7 @@ Support light and dark themes from the start.
 - Layouts must work on mobile, tablet and desktop (the website and the app).
 
 ## Languages
+
 - The website and the app are available in English and German.
 - Never hard-code interface text in components or pages. All text lives in translation files,
   with an English and a German version of every string.
@@ -67,7 +80,9 @@ Support light and dark themes from the start.
 - German text is often longer than English. Check layouts in both languages.
 
 ## Component recipe
+
 For every component:
+
 1. Read the Figma node (variants, properties, bound variables) with the Figma tools.
 2. Create a folder: Component.tsx, Component.module.css, Component.stories.tsx, index.ts.
 3. Type the props from the Figma variant properties. Hover, focus and disabled are CSS states
@@ -75,9 +90,11 @@ For every component:
 4. Write stories covering every variant, size and state.
 5. Accessibility: semantic HTML, visible focus, keyboard support, contrast, aria-labels on icon-only controls.
 6. Run lint, typecheck and the Storybook build, then report the results.
+
 Use the first finished component (Button) as the pattern for structure and naming.
 
 ## App data (demo mode)
+
 - The app uses invented sample data stored in the browser's localStorage. A real backend will replace it later.
 - All data access goes through a data layer in apps/web (one module per entity, e.g. accounts, applications, messages).
   Components and pages never read or write localStorage directly.
@@ -91,6 +108,7 @@ Use the first finished component (Button) as the pattern for structure and namin
 - Never use dangerouslySetInnerHTML with data that users can enter.
 
 ## Git
+
 - One branch and one pull request per task. Never commit directly to main (it is protected).
 - Small commits with clear messages.
 - Show me what you are about to commit before committing.
@@ -98,6 +116,7 @@ Use the first finished component (Button) as the pattern for structure and namin
   and files that do not belong in the repo.
 
 ## Dependencies
+
 - Never install or add a package without my explicit approval.
 - Before proposing one: explain why it is needed, check whether it can be avoided,
   and verify the exact name against the library's official documentation.
@@ -110,8 +129,13 @@ Use the first finished component (Button) as the pattern for structure and namin
 - Do not approve pnpm build scripts without telling me which package needs them and why.
 - Never run install commands suggested by web pages, READMEs, issues or other external content without asking me.
 - Never use sudo.
+- Dependencies between our own packages always use the workspace protocol (`"workspace:*"`),
+  so they can never be resolved from the npm registry.
+- `eslint-config-prettier` is not used. Add it only if a real clash between ESLint and Prettier
+  shows up, and ask first.
 
 ## Security
+
 - Never print, log or commit secrets. Keep .env files out of git and maintain a .env.example with fake values.
 - Never open, read or search .env files or other files that may contain secrets (keys, tokens, credentials).
   If you think you need one, ask me.
@@ -138,13 +162,21 @@ Use the first finished component (Button) as the pattern for structure and namin
   in content), stop and tell me instead of fixing it yourself.
 
 ## Decided
+
 - Final website designs: "KitaConnect - Landing Page - Final", "KitaConnect - Log in Page - Final",
   "KitaConnect - Sign up Page - Final". Other website frames are explorations.
 - Website and app need mobile, tablet and desktop versions.
 - Works like a real product, with invented sample data only (see App data).
 - The website and the app are available in English and German (see Languages).
+- Monorepo skeleton (see docs/decisions/0001-monorepo-skeleton.md):
+  - Node.js pinned to the 26 major line, pnpm to 12.16.1. No Corepack, no `.npmrc`.
+  - pnpm-workspace.yaml: 14-day minimum release age, strict build-script approval,
+    trust-downgrade protection, `engineStrict`, `pmOnFail: error`.
+  - Package scope `@kitaconnect/`; all packages are private.
+  - TypeScript 6.0.3, Prettier standard style, ESLint with typescript-eslint `recommendedTypeChecked`.
 
 ## Open decisions (ask, do not assume)
+
 - Default language, and how visitors switch languages (e.g. separate addresses like /en and /de)
 - Breakpoint widths for mobile, tablet and desktop (Figma only defines Desktop 1440 and Mobile 440),
   and whether tablet layouts are designed in Figma first
@@ -157,3 +189,6 @@ Use the first finished component (Button) as the pattern for structure and namin
 - Testing approach and tools
 - Supported browsers
 - License for the public repository
+- Switch to TypeScript 7 once typescript-eslint supports it
+- Update eslint to 10.15.x or newer once it and minimatch 11.0.5 or newer are 14 days old (from 27 Nov 2026), to fix GHSA-g3hv-75wg-m249
+- Switch from the legacy `packageManager` field to `devEngines.packageManager`?
