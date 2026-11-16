@@ -1,0 +1,8 @@
+# Files Prettier must never change.
+# Prettier also skips everything in .gitignore (node_modules, build output, .env files).
+
+# Written by pnpm
+pnpm-lock.yaml
+
+# Claude Code permission settings (changed only with the owner's approval)
+.claude/

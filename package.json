@@ -9,9 +9,12 @@
     "pnpm": "12.16.1"
   },
   "scripts": {
-    "typecheck": "pnpm -r typecheck"
+    "typecheck": "pnpm -r typecheck",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
+    "prettier": "3.9.10",
     "typescript": "6.0.3"
   }
 }
