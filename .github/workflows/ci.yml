@@ -1,5 +1,5 @@
 # Checks every pull request and every push to main:
-# formatting, lint and typecheck. No secrets are used.
+# formatting, lint, typecheck and design tokens. No secrets are used.
 name: CI
 
 on:
@@ -46,3 +46,6 @@ jobs:
 
       - name: Typecheck
         run: pnpm typecheck
+
+      - name: Check design tokens are up to date
+        run: pnpm tokens:check
