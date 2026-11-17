@@ -1,4 +1,7 @@
 {
   "extends": "@kitaconnect/config/tsconfig.base.json",
-  "include": ["src"]
+  "compilerOptions": {
+    "erasableSyntaxOnly": true
+  },
+  "include": ["src", "scripts"]
 }

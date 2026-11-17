@@ -12,7 +12,9 @@
     "typecheck": "pnpm -r typecheck",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "tokens:build": "pnpm --filter @kitaconnect/tokens build",
+    "tokens:check": "pnpm --filter @kitaconnect/tokens check"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

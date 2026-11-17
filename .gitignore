@@ -8,6 +8,8 @@ node_modules/
 
 # Build output
 dist/
+# Exception: the generated design tokens CSS is committed
+!packages/tokens/dist/
 build/
 .next/
 out/
