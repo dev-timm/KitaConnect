@@ -3,7 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "description": "KitaConnect design tokens, generated into CSS variables.",
+  "type": "module",
+  "exports": {
+    "./tokens.css": "./dist/tokens.css"
+  },
   "scripts": {
+    "build": "node scripts/build-tokens.ts",
+    "check": "node scripts/build-tokens.ts --check",
     "typecheck": "tsc"
   },
   "devDependencies": {

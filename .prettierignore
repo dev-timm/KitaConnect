@@ -4,5 +4,8 @@
 # Written by pnpm
 pnpm-lock.yaml
 
+# Exported from Figma; kept byte-identical to the export
+packages/tokens/src/tokens.json
+
 # Claude Code permission settings (changed only with the owner's approval)
 .claude/
