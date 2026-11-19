@@ -36,7 +36,7 @@ This is a PUBLIC repository. Keep it clean and professional, and never commit an
 - TypeScript (strict), React, Next.js (App Router)
 - Styling: CSS custom properties from design tokens + CSS Modules. No Tailwind.
 - Storybook (React + Vite) lives in packages/ui
-- ESLint, Prettier, GitHub Actions (lint, typecheck, Storybook build on every PR)
+- ESLint, Prettier, GitHub Actions on every PR: format, lint, typecheck, design tokens, and the Storybook build once Storybook exists
 - Node.js 26 (LTS) and pnpm 12.16.1. Pin them in the project (packageManager field and engines)
   so local and CI use the same versions.
 - Accessibility target: WCAG 2.2 AA.
@@ -49,24 +49,32 @@ This is a PUBLIC repository. Keep it clean and professional, and never commit an
 - `packages/config`: shared TypeScript and ESLint settings
 
 Check package.json for the exact scripts. Do not guess command names.
-Root scripts: `pnpm format`, `pnpm format:check`, `pnpm lint`, `pnpm typecheck`.
+Root scripts: `pnpm format`, `pnpm format:check`, `pnpm lint`, `pnpm typecheck`,
+`pnpm tokens:build`, `pnpm tokens:check`.
 
 ## Design tokens
 
-The Figma file has four variable collections. Keep that layering in code:
+Three layers (Primitives, Alias, Usage) in four Figma collections. Keep that layering in code:
 
-- Brand: primitives (colors, font families, font weights, numeric scale)
-- Alias: palettes (primary, error, success, warning, information, neutral), border width, border radius
-- Mapped: role tokens (text, icon, surface, border) with Light and Dark modes
-- Responsive: type sizes with Desktop (1440) and Mobile (440) modes
+- Primitives (`Primitives`): colors, numeric scale, font families, font weights
+- Alias (`Alias`): color roles (primary, success, warning, error, information, neutral), border width,
+  border radius
+- Usage (`Semantic / Color`): text, icon, surface and border colors with Light and Dark modes
+- Usage (`Semantic / Typography`): font size, line height and paragraph spacing with Mobile and Desktop modes
 
-Propose the CSS naming scheme for my approval before generating tokens.
-Support light and dark themes from the start.
+Components use Usage tokens. Temporary exceptions until semantic tokens exist: border width and
+radius come from Alias, spacing uses the Primitives scale (`--kc-scale-*`).
+
+- `packages/tokens/src/tokens.json` is the Figma export and is never edited by hand
+  (export procedure in docs/decisions/0002-design-tokens.md).
+- `packages/tokens/dist/tokens.css` is generated and never edited by hand.
+- After a new export, run `pnpm tokens:build` and commit both files together. CI runs `pnpm tokens:check`.
 
 ## Styling rules
 
 - Never write raw color, font, spacing, radius or shadow values in CSS or TSX. Use token variables only.
-- Components never use Brand primitives directly. Colors come from Mapped tokens, border width and radius from Alias tokens, and type sizes from Responsive tokens.
+- Components never use Primitives directly, except the spacing scale for now (see Design tokens).
+  Colors come from Semantic / Color, border width and radius from Alias, and type sizes from Semantic / Typography.
 - Fonts are loaded in one place and identically in Storybook and the app.
 - The app may style layout only. Anything visual that is missing goes into packages/ui first.
 - Layouts must work on mobile, tablet and desktop (the website and the app).
@@ -174,15 +182,23 @@ Use the first finished component (Button) as the pattern for structure and namin
     trust-downgrade protection, `engineStrict`, `pmOnFail: error`.
   - Package scope `@kitaconnect/`; all packages are private.
   - TypeScript 6.0.3, Prettier standard style, ESLint with typescript-eslint `recommendedTypeChecked`.
+- Design tokens (see docs/decisions/0002-design-tokens.md):
+  - Own build script with Node.js built-ins only, no packages.
+  - CSS names: `--kc-` + Figma name (lowercase, `/` and spaces become `-`).
+  - Light on `:root`, Dark under `[data-theme="dark"]`, not switched on yet.
+  - Typography is mobile first, with Desktop values from 768px.
+  - rem for font size, line height and paragraph spacing; px for the scale, border width and radius.
 
 ## Open decisions (ask, do not assume)
 
 - Default language, and how visitors switch languages (e.g. separate addresses like /en and /de)
-- Breakpoint widths for mobile, tablet and desktop (Figma only defines Desktop 1440 and Mobile 440),
-  and whether tablet layouts are designed in Figma first
+- Layout breakpoints for mobile, tablet and desktop, and whether tablet layouts are designed in Figma
+  first (the typography switch at 768px is decided)
 - Variant naming cleanup in Figma (Purpose values: default, success, information, lowercase)
 - Button small size: docs say 40px, the design uses 44px
 - Shadow and elevation tokens (none exist in Figma yet)
+- Semantic spacing tokens
+- Dark palette design pass (contrast)
 - Licenses for third-party icon sets and fonts
 - Deployment host
 - How the chosen language is remembered (e.g. a cookie or the address), together with the cookie rule
